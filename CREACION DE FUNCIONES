@@ -1,0 +1,39 @@
+-- FUNCIONES
+
+-- 1 CALCULAR LAS COMISIONES POR VENDEDOR
+-- PERMITE CALCULAR LAS COMISIONES POR VENTAS A LOS VENDEDORS
+
+DELIMITER //
+CREATE FUNCTION `comisiones_por_vendedor`(idvendedor int, comision int) 
+returns int 
+no sql 
+BEGIN
+DECLARE total_vendido FLOAT;
+SELECT (precio * cantidad) 
+  INTO   total_vendido 
+  FROM   ventas 
+  WHERE  id_vendedor = idvendedor;
+RETURN total_vendido*comision*0.01;
+END //
+DELIMITER;
+
+-- 2 CALCULAR EL IVA POR VENTAS
+
+-- PERMITE CALCULAR EL IVA VENTAS ENTRE DOS RANGOS DE FECHAS
+
+DELIMITER //
+CREATE FUNCTION `iva_ventas`(fecha_inicial date, fecha_final date)  returns float 
+no sql 
+BEGIN
+DECLARE total_facturado FLOAT;
+SELECT Sum(precio*cantidad) 
+  INTO   total_facturado 
+  FROM   ventas 
+  WHERE  fecha >= fecha_inicial 
+  AND    fecha <= fecha_final;
+RETURN total_facturado*.21;
+END //
+DELIMITER;
+
+
+
