@@ -1,0 +1,64 @@
+ -- creacion de stored procedures
+-- 1. insercion de ingresos de articulos
+-- este procedimiento permite el ingreso de artículos
+delimiter //CREATE PROCEDURE ingreso_de_articulo (idingreso int,
+nrofactura                                      varchar(255),
+dia                                             date,
+unidades                                        decimal(10,0),
+idprod                                          int)
+BEGININSERT INTO ingresos
+              (
+                          id_ingreso,
+                          nro_factura,
+                          fecha,
+                          cantidad,
+                          id_producto
+              )
+              VALUES
+              (
+                          idingreso,
+                          nrofactura,
+                          dia,
+                          unidades,
+                          idprod
+              );END;//
+delimiter ; 
+
+-- 2. insercion de ventas
+-- este procedimiento permite la realizacion de las ventas
+
+delimiter //CREATE PROCEDURE ventas_realizadas (idventa int,
+pr float,
+unidades      int,
+idcliente     int,
+idcanal       int,
+idvendedor    int,
+idformadepago int,
+idprod        int)
+BEGININSERT INTO ventas
+              (
+                          id_venta,
+                          fecha,
+                          precio,
+                          cantidad,
+                          id_cliente,
+                          id_canal,
+                          id_vendedor,
+                          id_forma_de_pago,
+                          id_producto
+              )
+              VALUES
+              (
+                          idventa,
+                          Now(),
+                          pr,
+                          unidades,
+                          idcliente,
+                          idcanal,
+                          idvendedor,
+                          idformadepago,
+                          idprod
+              );END;//
+delimiter;
+
+
