@@ -1,4 +1,14 @@
- -- creacion de stored procedures
+-- correccion de desafio
+
+CREATE PROCEDURE `CONSULTA_DE-ARTICULOS`(IN CAMPO VARCHAR(50), IN ORDEN VARCHAR(20))
+BEGIN
+SET @CLAUSULA = CONCAT('SELECT * FROM PRODUCTOS ORDER BY ', CAMPO, ' ', ORDEN);
+ PREPARE RUNSQL FROM @CLAUSULA;
+ EXECUTE RUNSQL;
+ DEALLOCATE PREPARE RUNSQL;
+END
+
+-- creacion de stored procedures
 -- 1. insercion de ingresos de articulos
 -- este procedimiento permite el ingreso de artículos
 delimiter //CREATE PROCEDURE ingreso_de_articulo (idingreso int,
