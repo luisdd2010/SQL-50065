@@ -1,0 +1,73 @@
+-- creacion de tablas de registros de clientes_log
+CREATE TABLE IF NOT EXISTS logs_clientes
+  (
+     id_cliente   INT auto_increment PRIMARY KEY,
+     description  VARCHAR(255),
+     user_id      VARCHAR(255),
+     ejecutado_el TIMESTAMP
+  );
+
+-- este trigger registra inserciones de clientes
+CREATE TRIGGER tr_add_log_clientes BEFORE INSERT
+ON clientes
+FOR EACH row
+  INSERT INTO logs_clientes
+              (id_cliente,
+               description,
+               user_id,
+               ejecutado_el)
+  VALUES      (new.id_cliente,
+               'CARGA',
+               User(),
+               Now());
+
+-- Este trigger registra actualizaciones de clientes
+CREATE TRIGGER tr_mod_log_clientes after UPDATE
+ON clientes
+FOR EACH row
+  INSERT INTO logs_clientes
+              (id_cliente,
+               description,
+               user_id,
+               ejecutado_el)
+  VALUES      (new.id_cliente,
+               'ACTUAALIZACION',
+               User(),
+               Now());
+
+-- creacion de tablas de registros de clientes_log
+CREATE TABLE IF NOT EXISTS logs_productos
+  (
+     id_producto  INT auto_increment PRIMARY KEY,
+     description  VARCHAR(255),
+     user_id      VARCHAR(255),
+     ejecutado_el TIMESTAMP
+  );
+
+-- este trigger registra inserciones de productos
+CREATE TRIGGER tr_add_log_productos BEFORE INSERT
+ON productos
+FOR EACH row
+  INSERT INTO logs_productos
+              (id_producto,
+               description,
+               user_id,
+               ejecutado_el)
+  VALUES      (new.id_producto,
+               'CARGA',
+               User(),
+               Now());
+
+-- Este trigger registra actualizaciones de productos
+CREATE TRIGGER tr_mod_log_productos after UPDATE
+ON productos
+FOR EACH row
+  INSERT INTO logs_productos
+              (id_producto,
+               description,
+               user_id,
+               ejecutado_el)
+  VALUES      (new.id_producto,
+               'ACTUAALIZACION',
+               User(),
+               Now());  
